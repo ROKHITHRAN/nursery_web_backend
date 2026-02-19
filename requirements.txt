@@ -1,0 +1,33 @@
+
+//Controllers
+
+//UserController
+1.) Post/ Login 
+2.) Get/ UserDetails
+3.) Post/ Register 
+
+//Category
+1.) Get/ Categories
+2.) Post/ Categories
+3.) Get/ PlantsByCategory
+
+//Plant
+1.) Get/ Plant
+2.) Post/ Plant
+3.) Get/ PlantImage
+
+//PlantImage
+1.) Post/ PlantImage
+2.) Delete/ PlantImage
+3.) Patch/ PlantImage
+
+//Order
+1.) Patch/ OrderStatus
+2.) Get/ OrderItems
+3.) Get/ lastId
+4.) Post/ Order
+
+//OrderItem
+1.) Post/ OrderItem
+2.) Delete/ OrderItem
+3.) Patch/ quantity
