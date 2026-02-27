@@ -57,4 +57,24 @@ public class CartService {
         }
     }
 
+    @Transactional
+    public void decreaseQuantity(Long userId, Long plantId, Long quantity) {
+
+        Orders cart = orderRepo.getCartByUser(userId, "CART")
+                        .orElseThrow(()-> new RuntimeException("Cart not found"));
+        Plant plant = plantRepo.findById(plantId)
+                .orElseThrow(() -> new RuntimeException("Plant not found"));
+
+        OrderItem item = orderItemRepo.findByOrderAndPlant(cart, plant)
+                .orElseThrow(() -> new RuntimeException("Item not in cart"));
+
+        Long newQty = item.getQuantity() - quantity;
+
+        if (newQty <= 0) {
+            orderItemRepo.delete(item);
+        } else {
+            item.setQuantity(newQty);
+        }
+    }
+
 }
