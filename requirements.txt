@@ -28,10 +28,9 @@
 2.) Get/ OrderItems
 3.) Post/ Order
 
-//OrderItem
-1.) Post/ OrderItem
-2.) Delete/ OrderItem
-3.) Patch/ quantity
+//CartService
+1.) Post/ AddItemToCart
+2.) Patch/ DecreaseQuantity
 
 
 TODO
