@@ -19,11 +19,12 @@ public class Plant {
     private Long availQuantity;
     private String description;
     
+
     @ManyToOne
     @JoinColumn(name = "cat_id")
     private Category category;
     
-    public Plant(String plantName, Long price, Long availQuantity, String description, Category category) {
+    public Plant(String plantName, Long price, Long availQuantity, String description,  Category category) {
         this.plantName = plantName;
         this.price = price;
         this.availQuantity = availQuantity;

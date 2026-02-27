@@ -3,6 +3,7 @@ package com.example.nursery_web.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Getter
 public class Orders {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;    
 
     private Long totalPrice;
@@ -42,7 +44,7 @@ public class Orders {
     //     this.paymentType = paymentType;
     //     this.user = user;
     // }
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<OrderItem> orderItems;
 
     public Long getOrderId() {
