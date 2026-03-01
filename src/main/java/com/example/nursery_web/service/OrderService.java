@@ -1,8 +1,12 @@
 package com.example.nursery_web.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.example.nursery_web.model.OrderItem;
 import com.example.nursery_web.model.Orders;
+import com.example.nursery_web.repository.OrderItemRepository;
 import com.example.nursery_web.repository.OrderRepository;
 
 import jakarta.transaction.Transactional;
@@ -11,9 +15,12 @@ import jakarta.transaction.Transactional;
 public class OrderService {
 
     private final OrderRepository orderRepo;
-    public OrderService(OrderRepository orderRepo)
+    private final OrderItemRepository orderItemRepo;
+
+    public OrderService(OrderRepository orderRepo, OrderItemRepository orderItemRepo)
     {
         this.orderRepo = orderRepo;
+        this.orderItemRepo = orderItemRepo;
     }    
 
     public Orders addOrder(Orders order)
@@ -68,4 +75,12 @@ public class OrderService {
         return exist;
     }
 
+    @Transactional
+    public List<OrderItem> getOrderItems(Long orderId)
+    {
+        Orders order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        return order.getOrderItems();
+    }
 }

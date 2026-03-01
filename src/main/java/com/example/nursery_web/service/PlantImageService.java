@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.example.nursery_web.model.PlantImage;
 import com.example.nursery_web.repository.PlantImageRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PlantImageService {
     
@@ -29,6 +31,23 @@ public class PlantImageService {
     public void deletePlantImage(Long plantImageId)
     {
         plantImageRepo.deleteById(plantImageId);
+    }
+
+   @Transactional
+    public PlantImage updatePlantImage(PlantImage plantImage) 
+    {
+
+        PlantImage exist = plantImageRepo.findById(plantImage.getImageId())
+                .orElseThrow(() -> new RuntimeException("Plant image not found"));
+
+    
+        exist.setImageUrl(plantImage.getImageUrl());
+
+        if (plantImage.getPlant() != null) {
+            exist.setPlant(plantImage.getPlant());
+        }
+
+        return exist; 
     }
 
 }
