@@ -2,6 +2,8 @@ package com.example.nursery_web.service;
 
 import java.util.Optional;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,34 +14,34 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService 
-{
+public class AuthService {
+
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    // Register User
     public Users register(Users user) {
 
-        Optional<Users> existingUser = userRepo.findByEmail(user.getEmail());
-
-        if (existingUser.isPresent()) {
+        if (userRepo.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException("Email already registered");
         }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
+
         return userRepo.save(user);
     }
 
-    // Login
-    public Users login(String email, String password) {
+    public String login(String email, String password) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
 
         Users user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Invalid Email"));
+                .orElseThrow();
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid Password");
-        }
-
-        return user;
+        return jwtService.generateToken(user.getEmail(), user.getRole());
     }
-
 }

@@ -18,21 +18,24 @@ public class Users {
     private String password;
     private String mobileNo;
     private String email;
+    private String role;
 
+    
     @OneToMany(mappedBy = "user")
     private List<Orders> orders;
-
+    
     // No-arg constructor (required by JPA)
     public Users() {
     }
-
-    public Users(String userName, String password, String mobileNo, String email) {
+    
+    public Users(String userName, String password, String mobileNo, String email,String role) {
         this.userName = userName;
         this.password = password;
         this.mobileNo = mobileNo;
         this.email = email;
+        this.role = role;
     }
-
+    
     public Long getId() {
         return userId;
     }
@@ -60,13 +63,19 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public List<Orders> getOrders() {
         return orders;
     }
-
+    
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
-
+    public String getRole() {
+        return role;
+    }
+    
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
