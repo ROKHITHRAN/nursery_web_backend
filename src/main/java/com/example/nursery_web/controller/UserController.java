@@ -15,19 +15,6 @@ public class UserController {
 
     private final UserService userService;
 
-    // 1️⃣ Register
-    @PostMapping("/register")
-    public Users register(@RequestBody Users user) {
-        return userService.register(user);
-    }
-
-    // 2️⃣ Login
-    @PostMapping("/login")
-    public Users login(@RequestParam String email,
-                       @RequestParam String password) {
-        return userService.login(email, password);
-    }
-
     // 3️⃣ Get User Details
     @GetMapping("/{id}")
     public Users getUserDetails(@PathVariable Long id) {
